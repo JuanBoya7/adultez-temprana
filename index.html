@@ -99,10 +99,12 @@ footer{max-width:860px;margin:0 auto;padding:0 18px 40px;font-size:13px;color:va
   <div id="paneles"></div>
 
   <div class="nota">
-    <b>Un matiz que suele perderse:</b> los tres componentes son continuos, no interruptores.
-    El corte en la mitad sirve para nombrar, no para clasificar personas. Y la proporción
-    cambia con el tiempo: Sternberg sostiene que la pasión tiende a decaer mientras la
-    intimidad y el compromiso pueden crecer.
+    <b>Cómo se decide el tipo:</b> un componente cuenta como presente cuando llega al menos
+    al 60&nbsp;% del más fuerte de ese vínculo. Lo que define la categoría es el equilibrio
+    entre los tres, no cuánto suman: Sternberg distingue el <i>tamaño</i> del triángulo —la
+    cantidad de amor— de su <i>forma</i> —el peso relativo de cada componente—. Y esa forma
+    cambia con el tiempo: sostiene que la pasión tiende a decaer mientras la intimidad y el
+    compromiso pueden crecer.
   </div>
 </main>
 
@@ -151,6 +153,9 @@ var VINCULOS = [
    s:"Un padre, una madre, un hermano: quien te venga a la cabeza."}
 ];
 
+var tocado = {};
+var NEUTRO = ["Ajusten los tres",
+  "El tipo aparece cuando muevan los deslizadores según cómo vean ese vínculo."];
 var estado = {};
 VINCULOS.forEach(function(v){ estado[v.id] = {i:50, p:50, c:50}; });
 var activo = VINCULOS[0].id;
@@ -161,8 +166,21 @@ function esc(x){
   });
 }
 
+/* Un corte fijo en 50 hacía que casi todo cayera en «amor consumado»: quien
+   aprecia un vínculo rara vez puntúa por debajo de la mitad. Ahora lo que decide
+   es el EQUILIBRIO entre los tres componentes —la forma del triángulo— y no su
+   magnitud: un componente cuenta como presente si llega al 60 % del más fuerte. */
+var PISO = 20;      // por debajo de esto, el componente no cuenta
+var REL  = 0.60;    // proporción respecto del componente más fuerte
+var FLOJO = 35;     // si ningún componente supera esto, el vínculo es débil
+
 function clave(v){
-  return (v.i>=50?"1":"0") + (v.p>=50?"1":"0") + (v.c>=50?"1":"0");
+  var vals = [v.i, v.p, v.c];
+  var max = Math.max(vals[0], vals[1], vals[2]);
+  if (max < FLOJO) return "000";
+  return vals.map(function(x){
+    return (x >= PISO && x >= REL * max) ? "1" : "0";
+  }).join("");
 }
 
 function triangulo(v){
@@ -220,7 +238,7 @@ function pintar(){
   }).join("");
 
   document.getElementById("paneles").innerHTML = VINCULOS.map(function(v){
-    var e = estado[v.id], k = clave(e), t = TIPOS[k];
+    var e = estado[v.id], k = tocado[v.id] ? clave(e) : "", t = tocado[v.id] ? TIPOS[k] : NEUTRO;
     return '<section class="panel'+(v.id===activo?" on":"")+'" data-p="'+v.id+'">'+
       '<div class="wrap">'+
         '<div class="card">'+
@@ -251,6 +269,7 @@ function pintar(){
   Array.prototype.forEach.call(document.querySelectorAll("[data-k]"), function(r){
     r.addEventListener("input", function(){
       estado[r.dataset.v][r.dataset.k] = +r.value;
+      tocado[r.dataset.v] = true;
       actualizar(r.dataset.v);
     });
   });
@@ -268,7 +287,7 @@ function pintar(){
 }
 
 function actualizar(id){
-  var e = estado[id], k = clave(e), t = TIPOS[k];
+  var e = estado[id], k = tocado[id] ? clave(e) : "", t = tocado[id] ? TIPOS[k] : NEUTRO;
   var p = document.querySelector('[data-p="'+id+'"]');
   if (!p) return;
   COMPS.forEach(function(c){
