@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El triángulo del amor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F7F9FB; --surface:#FFFFFF; --surface-2:#EDF2F6;
+  --ink:#1F2C36; --ink-2:#53646F; --ink-3:#7E8F9B;
+  --line:#DCE4EA; --line-2:#C4D0D8;
+  --rosa:#A8517B; --rosa-b:#F9E9F1;
+  --int:#3A6E99; --pas:#A8517B; --com:#2A7D71;
+  --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+     font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;line-height:1.18;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--rosa);outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+header{background:var(--surface);border-bottom:1px solid var(--line);padding:14px 18px}
+.hin{max-width:860px;margin:0 auto}
+.kick{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+header h1{font-size:21px;margin-top:2px}
+
+main{max-width:860px;margin:0 auto;padding:26px 18px 80px}
+.intro{font-family:var(--serif);font-size:19px;color:var(--ink-2);line-height:1.5;
+       margin-bottom:26px;max-width:60ch}
+
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.tab{background:var(--surface);border:1px solid var(--line-2);border-radius:99px;
+     padding:9px 16px;font-size:14px;color:var(--ink-2);font-weight:500}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+.panel{display:none}.panel.on{display:block}
+
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,300px);gap:24px;align-items:start}
+@media(max-width:720px){.wrap{grid-template-columns:1fr}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.card h2{font-size:22px;margin-bottom:4px}
+.card .sub{font-size:13.5px;color:var(--ink-3);margin-bottom:18px}
+
+.sl{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:baseline;margin-bottom:3px}
+.sl b{font-size:14.5px;font-weight:600}
+.sl span{font-family:var(--sans);font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink-3)}
+.slider{margin-bottom:16px}
+.slider p{font-size:12.5px;color:var(--ink-3);line-height:1.4;margin-bottom:6px}
+input[type=range]{width:100%;height:26px;background:transparent;-webkit-appearance:none;appearance:none}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:var(--surface-2)}
+input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:var(--surface-2)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;
+  border-radius:50%;background:var(--c);border:3px solid #fff;box-shadow:0 1px 4px rgba(31,44,54,.3);
+  margin-top:-9px}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--c);
+  border:3px solid #fff;box-shadow:0 1px 4px rgba(31,44,54,.3)}
+
+svg.tri{width:100%;height:auto;display:block}
+.res{margin-top:6px;text-align:center}
+.res .tt{font-family:var(--serif);font-size:29px;font-weight:600;color:var(--rosa);line-height:1.1}
+.res .td{font-size:14.5px;color:var(--ink-2);margin-top:7px;line-height:1.45;
+         max-width:44ch;margin-left:auto;margin-right:auto}
+
+.ocho{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:6px}
+.t8{border:1px solid var(--line);border-radius:7px;padding:9px 11px;background:var(--surface)}
+.t8.on{background:var(--rosa-b);border-color:var(--rosa)}
+.t8 b{display:block;font-family:var(--serif);font-size:14.5px;line-height:1.15}
+.t8.on b{color:var(--rosa)}
+.t8 span{font-size:11px;color:var(--ink-3)}
+
+.nota{background:var(--surface-2);border-radius:9px;padding:16px 18px;margin-top:22px;
+      font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.nota b{color:var(--ink)}
+footer{max-width:860px;margin:0 auto;padding:0 18px 40px;font-size:13px;color:var(--ink-3)}
+</style>
+</head>
+<body>
+
+<header><div class="hin">
+  <div class="kick">Teoría triangular del amor · Sternberg</div>
+  <h1>El triángulo del amor</h1>
+</div></header>
+
+<main>
+  <p class="intro">Tres vínculos. En cada uno, pensá en una persona concreta y mové los
+     deslizadores según cómo veas esa relación. La combinación cae sola en uno de los ocho
+     tipos.</p>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div id="paneles"></div>
+
+  <div class="nota">
+    <b>Un matiz que suele perderse:</b> los tres componentes son continuos, no interruptores.
+    El corte en la mitad sirve para nombrar, no para clasificar personas. Y la proporción
+    cambia con el tiempo: Sternberg sostiene que la pasión tiende a decaer mientras la
+    intimidad y el compromiso pueden crecer.
+  </div>
+</main>
+
+<footer>Nada de lo que escribas acá se guarda ni se envía: el ejercicio vive en tu propio
+  dispositivo.</footer>
+
+<script>
+"use strict";
+
+var COMPS = [
+  {k:"i", l:"Intimidad",  c:"--int",
+   h:"Cercanía emocional, confianza, sentirse unido a esa persona."},
+  {k:"p", l:"Pasión",     c:"--pas",
+   h:"Atracción física, deseo, activación."},
+  {k:"c", l:"Compromiso", c:"--com",
+   h:"La decisión de sostener el vínculo en el tiempo."}
+];
+
+var TIPOS = {
+  "000":["Falta de amor","Ninguno de los tres componentes alcanza el umbral. Es la mayoría de nuestras relaciones cotidianas."],
+  "100":["Cariño","Solo intimidad. Es el afecto de las amistades que no despiertan deseo ni implican compromiso formal."],
+  "010":["Encaprichamiento","Solo pasión. Se enciende rápido y se apaga cuando decae la activación."],
+  "001":["Amor vacío","Solo compromiso. El vínculo se sostiene por decisión, sin cercanía ni deseo."],
+  "110":["Amor romántico","Intimidad y pasión, sin compromiso. Cercanía y deseo, pero sin proyecto compartido."],
+  "011":["Amor fatuo","Pasión y compromiso, sin intimidad. Se decide construir algo sin haberse conocido de verdad."],
+  "101":["Amor de compañía","Intimidad y compromiso, sin pasión. Sostiene los vínculos duraderos, incluidos los que no son de pareja."],
+  "111":["Amor consumado","Los tres componentes presentes. Sternberg advierte que es más difícil de mantener que de alcanzar."]
+};
+var ORDEN = ["000","100","010","001","110","011","101","111"];
+
+var VINCULOS = [
+  {id:"pareja", tab:"Una relación de pareja",
+   t:"Una relación de pareja", s:"Actual o pasada: la que quieras mirar."},
+  {id:"amistad", tab:"Una amistad cercana",
+   t:"Una amistad cercana", s:"Alguien cercano, de los que cuentan de verdad."},
+  {id:"familia", tab:"Una relación familiar",
+   t:"Una relación familiar",
+   s:"Un padre, una madre, un hermano: quien te venga a la cabeza."}
+];
+
+var estado = {};
+VINCULOS.forEach(function(v){ estado[v.id] = {i:50, p:50, c:50}; });
+var activo = VINCULOS[0].id;
+
+function clave(v){
+  return (v.i>=50?"1":"0") + (v.p>=50?"1":"0") + (v.c>=50?"1":"0");
+}
+
+function triangulo(v){
+  var R = 105, cx = 150, cy = 140;
+  var ang = [-90, 30, 150];                       // intimidad, pasión, compromiso
+  var val = [v.i, v.p, v.c];
+  function punto(i, r){
+    var a = ang[i] * Math.PI / 180;
+    return [cx + Math.cos(a)*r, cy + Math.sin(a)*r];
+  }
+  var marco = ang.map(function(_,i){ return punto(i, R).join(","); }).join(" ");
+  var forma = val.map(function(x,i){ return punto(i, Math.max(6, x/100*R)).join(","); }).join(" ");
+  var anillos = [0.33, 0.66].map(function(f){
+    return '<polygon points="'+ang.map(function(_,i){return punto(i,R*f).join(",");}).join(" ")+
+           '" fill="none" stroke="var(--line)" stroke-width="1"/>';
+  }).join("");
+  var ejes = ang.map(function(_,i){
+    var q = punto(i, R);
+    return '<line x1="'+cx+'" y1="'+cy+'" x2="'+q[0]+'" y2="'+q[1]+
+           '" stroke="var(--line)" stroke-width="1"/>';
+  }).join("");
+  // Etiquetas centradas sobre cada vértice: arriba por encima, abajo por debajo.
+  var vert = COMPS.map(function(comp,i){
+    var q = punto(i, R);
+    var y = q[1] + (i===0 ? -14 : 25);
+    return '<text x="'+q[0]+'" y="'+y+'" text-anchor="middle" '+
+           'font-size="14" font-weight="600" fill="var('+comp.c+')" '+
+           'font-family="var(--sans)">'+comp.l+'</text>';
+  }).join("");
+  var puntos = val.map(function(x,i){
+    var q = punto(i, Math.max(6, x/100*R));
+    return '<circle cx="'+q[0]+'" cy="'+q[1]+'" r="5.5" fill="var('+COMPS[i].c+')"/>';
+  }).join("");
+  return '<svg class="tri" viewBox="0 0 300 250" role="img" aria-label="Triángulo con los '+
+         'tres componentes">'+
+         '<polygon points="'+marco+'" fill="none" stroke="var(--line-2)" stroke-width="1.5"/>'+
+         anillos + ejes +
+         '<polygon points="'+forma+'" fill="var(--rosa)" fill-opacity="0.17" '+
+         'stroke="var(--rosa)" stroke-width="2" stroke-linejoin="round"/>'+
+         puntos + vert + '</svg>';
+}
+
+function pintar(){
+  document.getElementById("tabs").innerHTML = VINCULOS.map(function(v){
+    return '<button class="tab" role="tab" data-v="'+v.id+'" aria-selected="'+
+           (v.id===activo)+'">'+v.tab+'</button>';
+  }).join("");
+
+  document.getElementById("paneles").innerHTML = VINCULOS.map(function(v){
+    var e = estado[v.id];
+    var k = clave(e), t = TIPOS[k];
+    return '<section class="panel'+(v.id===activo?" on":"")+'" data-p="'+v.id+'">'+
+      '<div class="wrap">'+
+        '<div class="card">'+
+          '<h2>'+v.t+'</h2><div class="sub">'+v.s+'</div>'+
+          COMPS.map(function(comp){
+            var val = e[comp.k];
+            return '<div class="slider" style="--c:var('+comp.c+')">'+
+              '<div class="sl"><b style="color:var('+comp.c+')">'+comp.l+'</b>'+
+              '<span>'+val+'</span></div>'+
+              '<p>'+comp.h+'</p>'+
+              '<input type="range" min="0" max="100" value="'+val+'" '+
+              'data-v="'+v.id+'" data-k="'+comp.k+'" aria-label="'+comp.l+'">'+
+              '</div>';
+          }).join("")+
+        '</div>'+
+        '<div class="card">'+
+          triangulo(e)+
+          '<div class="res"><div class="tt">'+t[0]+'</div><div class="td">'+t[1]+'</div></div>'+
+          '<div class="ocho">'+ORDEN.map(function(code){
+            return '<div class="t8'+(code===k?" on":"")+'"><b>'+TIPOS[code][0]+'</b>'+
+                   '<span>'+etiqueta(code)+'</span></div>';
+          }).join("")+'</div>'+
+        '</div>'+
+      '</div></section>';
+  }).join("");
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-k]"), function(r){
+    r.addEventListener("input", function(){
+      estado[r.dataset.v][r.dataset.k] = +r.value;
+      pintar();
+      var again = document.querySelector('[data-p="'+r.dataset.v+'"] [data-k="'+r.dataset.k+'"]');
+      if (again) again.focus({preventScroll:true});
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-v].tab"), function(b){
+    b.onclick = function(){ activo = b.dataset.v; pintar(); };
+  });
+}
+
+function etiqueta(code){
+  var n = ["Intimidad","Pasión","Compromiso"].filter(function(_,i){ return code[i]==="1"; });
+  return n.length ? n.join(" + ") : "—";
+}
+
+pintar();
+</script>
+</body>
+</html>
