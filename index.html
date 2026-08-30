@@ -122,14 +122,22 @@ var COMPS = [
 ];
 
 var TIPOS = {
-  "000":["Falta de amor","Ninguno de los tres componentes alcanza el umbral. Es la mayoría de nuestras relaciones cotidianas."],
-  "100":["Cariño","Solo intimidad. Es el afecto de las amistades que no despiertan deseo ni implican compromiso formal."],
-  "010":["Encaprichamiento","Solo pasión. Se enciende rápido y se apaga cuando decae la activación."],
-  "001":["Amor vacío","Solo compromiso. El vínculo se sostiene por decisión, sin cercanía ni deseo."],
-  "110":["Amor romántico","Intimidad y pasión, sin compromiso. Cercanía y deseo, pero sin proyecto compartido."],
-  "011":["Amor fatuo","Pasión y compromiso, sin intimidad. Se decide construir algo sin haberse conocido de verdad."],
-  "101":["Amor de compañía","Intimidad y compromiso, sin pasión. Sostiene los vínculos duraderos, incluidos los que no son de pareja."],
-  "111":["Amor consumado","Los tres componentes presentes. Sternberg advierte que es más difícil de mantener que de alcanzar."]
+  "000":["Falta de amor",
+   "Ninguno de los tres componentes alcanza el umbral. Sternberg la usa para describir el grueso de nuestras relaciones cotidianas: no es un fracaso afectivo, es la ausencia de vínculo. La mayor parte de la gente que conocemos cae aquí."],
+  "100":["Cariño",
+   "Solo intimidad: cercanía, calidez y confianza, sin deseo ni decisión de permanencia. Sternberg lo reserva para las amistades genuinas, y advierte que llamarlo «solo cariño» subestima su peso: es el componente que más sostiene un vínculo en el tiempo."],
+  "010":["Encaprichamiento",
+   "Solo pasión, sin conocimiento del otro ni decisión de permanecer. Es el «flechazo»: puede aparecer casi de inmediato y desaparecer con la misma rapidez, porque la activación que lo sostiene no se mantiene sola. Suele idealizarse a alguien de quien todavía se sabe muy poco."],
+  "001":["Amor vacío",
+   "Solo compromiso: la decisión de seguir, sin cercanía ni deseo. Sternberg lo describe como el final de muchas relaciones largas que se estancaron, pero también señala lo contrario: en culturas con matrimonios concertados puede ser el punto de partida desde el cual la intimidad se construye después."],
+  "110":["Amor romántico",
+   "Intimidad y pasión, sin compromiso. Se conocen de verdad y hay deseo, pero no hay una decisión que proyecte el vínculo. Sternberg lo describe como el cariño con activación añadida: intenso mientras dura, y sin nada estructural que lo sostenga cuando la intensidad baje."],
+  "011":["Amor fatuo",
+   "Pasión y compromiso, sin intimidad. Es el noviazgo relámpago: se decide construir algo sobre la base de la atracción, saltándose el conocimiento mutuo. Sternberg subraya el problema: la intimidad necesita tiempo para desarrollarse, y aquí el compromiso se asumió antes de que existiera."],
+  "101":["Amor de compañía",
+   "Intimidad y compromiso, sin pasión. Una amistad profunda y sostenida en el tiempo. Es la forma que toman muchas relaciones largas cuando la pasión decae y el afecto y la decisión permanecen, y también la de los vínculos que nunca fueron románticos: familia, amistades de toda la vida."],
+  "111":["Amor consumado",
+   "Los tres componentes presentes. Sternberg advierte que alcanzarlo es más fácil que mantenerlo, y lo compara con bajar de peso: el logro no garantiza la permanencia. Sostenerlo exige seguir traduciendo los tres componentes en actos, no solo sentirlos."]
 };
 var ORDEN = ["000","100","010","001","110","011","101","111"];
 
@@ -146,6 +154,12 @@ var VINCULOS = [
 var estado = {};
 VINCULOS.forEach(function(v){ estado[v.id] = {i:50, p:50, c:50}; });
 var activo = VINCULOS[0].id;
+
+function esc(x){
+  return String(x==null?"":x).replace(/[&<>"]/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+  });
+}
 
 function clave(v){
   return (v.i>=50?"1":"0") + (v.p>=50?"1":"0") + (v.c>=50?"1":"0");
@@ -191,24 +205,31 @@ function triangulo(v){
          puntos + vert + '</svg>';
 }
 
+function etiqueta(code){
+  var n = ["Intimidad","Pasión","Compromiso"].filter(function(_,i){ return code[i]==="1"; });
+  return n.length ? n.join(" + ") : "—";
+}
+
+/* Se dibuja UNA sola vez. Después solo se actualiza lo que cambia: si se
+   reconstruyera el panel dentro del evento input, el deslizador que el dedo
+   está arrastrando se destruiría a mitad del gesto y el valor quedaría corto. */
 function pintar(){
   document.getElementById("tabs").innerHTML = VINCULOS.map(function(v){
     return '<button class="tab" role="tab" data-v="'+v.id+'" aria-selected="'+
-           (v.id===activo)+'">'+v.tab+'</button>';
+           (v.id===activo)+'">'+esc(v.tab)+'</button>';
   }).join("");
 
   document.getElementById("paneles").innerHTML = VINCULOS.map(function(v){
-    var e = estado[v.id];
-    var k = clave(e), t = TIPOS[k];
+    var e = estado[v.id], k = clave(e), t = TIPOS[k];
     return '<section class="panel'+(v.id===activo?" on":"")+'" data-p="'+v.id+'">'+
       '<div class="wrap">'+
         '<div class="card">'+
-          '<h2>'+v.t+'</h2><div class="sub">'+v.s+'</div>'+
+          '<h2>'+esc(v.t)+'</h2><div class="sub">'+esc(v.s)+'</div>'+
           COMPS.map(function(comp){
             var val = e[comp.k];
             return '<div class="slider" style="--c:var('+comp.c+')">'+
               '<div class="sl"><b style="color:var('+comp.c+')">'+comp.l+'</b>'+
-              '<span>'+val+'</span></div>'+
+              '<span data-val="'+comp.k+'">'+val+'</span></div>'+
               '<p>'+comp.h+'</p>'+
               '<input type="range" min="0" max="100" value="'+val+'" '+
               'data-v="'+v.id+'" data-k="'+comp.k+'" aria-label="'+comp.l+'">'+
@@ -216,11 +237,12 @@ function pintar(){
           }).join("")+
         '</div>'+
         '<div class="card">'+
-          triangulo(e)+
-          '<div class="res"><div class="tt">'+t[0]+'</div><div class="td">'+t[1]+'</div></div>'+
+          '<div class="trihold">'+triangulo(e)+'</div>'+
+          '<div class="res"><div class="tt">'+esc(t[0])+'</div>'+
+          '<div class="td">'+esc(t[1])+'</div></div>'+
           '<div class="ocho">'+ORDEN.map(function(code){
-            return '<div class="t8'+(code===k?" on":"")+'"><b>'+TIPOS[code][0]+'</b>'+
-                   '<span>'+etiqueta(code)+'</span></div>';
+            return '<div class="t8'+(code===k?" on":"")+'" data-code="'+code+'">'+
+                   '<b>'+esc(TIPOS[code][0])+'</b><span>'+etiqueta(code)+'</span></div>';
           }).join("")+'</div>'+
         '</div>'+
       '</div></section>';
@@ -229,19 +251,36 @@ function pintar(){
   Array.prototype.forEach.call(document.querySelectorAll("[data-k]"), function(r){
     r.addEventListener("input", function(){
       estado[r.dataset.v][r.dataset.k] = +r.value;
-      pintar();
-      var again = document.querySelector('[data-p="'+r.dataset.v+'"] [data-k="'+r.dataset.k+'"]');
-      if (again) again.focus({preventScroll:true});
+      actualizar(r.dataset.v);
     });
   });
-  Array.prototype.forEach.call(document.querySelectorAll("[data-v].tab"), function(b){
-    b.onclick = function(){ activo = b.dataset.v; pintar(); };
+  Array.prototype.forEach.call(document.querySelectorAll(".tab"), function(b){
+    b.onclick = function(){
+      activo = b.dataset.v;
+      Array.prototype.forEach.call(document.querySelectorAll(".tab"), function(x){
+        x.setAttribute("aria-selected", x.dataset.v === activo);
+      });
+      Array.prototype.forEach.call(document.querySelectorAll(".panel"), function(x){
+        x.classList.toggle("on", x.dataset.p === activo);
+      });
+    };
   });
 }
 
-function etiqueta(code){
-  var n = ["Intimidad","Pasión","Compromiso"].filter(function(_,i){ return code[i]==="1"; });
-  return n.length ? n.join(" + ") : "—";
+function actualizar(id){
+  var e = estado[id], k = clave(e), t = TIPOS[k];
+  var p = document.querySelector('[data-p="'+id+'"]');
+  if (!p) return;
+  COMPS.forEach(function(c){
+    var n = p.querySelector('[data-val="'+c.k+'"]');
+    if (n) n.textContent = e[c.k];
+  });
+  p.querySelector(".trihold").innerHTML = triangulo(e);
+  p.querySelector(".tt").textContent = t[0];
+  p.querySelector(".td").textContent = t[1];
+  Array.prototype.forEach.call(p.querySelectorAll(".t8"), function(el){
+    el.classList.toggle("on", el.dataset.code === k);
+  });
 }
 
 pintar();
