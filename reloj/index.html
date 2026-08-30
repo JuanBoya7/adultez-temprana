@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El reloj social</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F7F9FB; --surface:#FFFFFF; --surface-2:#EDF2F6;
+  --ink:#1F2C36; --ink-2:#53646F; --ink-3:#7E8F9B;
+  --line:#DCE4EA; --line-2:#C4D0D8;
+  --sello:#A6462F; --sello-b:#FAECE8;
+  --a:#865DA8; --a-b:#F0E9F8;      /* primera columna */
+  --b:#A86828; --b-b:#FAEEDD;      /* segunda columna */
+  --ok:#2A7D71;
+  --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+     font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;line-height:1.18;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--sello);outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+header{background:var(--surface);border-bottom:1px solid var(--line);padding:14px 18px}
+.hin{max-width:860px;margin:0 auto}
+.kick{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+header h1{font-size:21px;margin-top:2px}
+
+main{max-width:860px;margin:0 auto;padding:26px 18px 80px}
+.intro{font-family:var(--serif);font-size:19px;color:var(--ink-2);line-height:1.5;
+       margin-bottom:8px;max-width:62ch}
+.aviso{font-size:13.5px;color:var(--ink-3);line-height:1.45;margin-bottom:24px;max-width:62ch}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+      padding:18px 20px;margin-bottom:14px}
+.hito{font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:14px}
+
+.fila{display:grid;grid-template-columns:74px 1fr 44px;gap:10px;align-items:center;
+      margin-bottom:9px}
+.fila .et{font-size:13px;font-weight:600;color:var(--c)}
+.fila .ed{font-size:14px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+input[type=range]{width:100%;height:26px;background:transparent;-webkit-appearance:none;appearance:none}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:var(--surface-2)}
+input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:var(--surface-2)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;
+  border-radius:50%;background:var(--c);border:3px solid #fff;box-shadow:0 1px 4px rgba(31,44,54,.3);
+  margin-top:-9px}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--c);
+  border:3px solid #fff;box-shadow:0 1px 4px rgba(31,44,54,.3)}
+.brecha{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.brecha b{color:var(--sello)}
+
+.resumen{background:var(--surface);border:2px solid var(--sello);border-radius:10px;
+         padding:20px;margin:22px 0 14px}
+.resumen .rt{font-family:var(--serif);font-size:25px;font-weight:600;color:var(--sello);
+             line-height:1.15;margin-bottom:6px}
+.resumen .rd{font-size:14.5px;color:var(--ink-2);line-height:1.5}
+svg.graf{width:100%;height:auto;display:block;margin-top:16px}
+
+.dato{background:var(--surface-2);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.dato h3{font-size:19px;margin-bottom:8px}
+.dato p{font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.dato .cita{font-size:12px;color:var(--ink-3);margin-top:9px}
+.comp{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.comp div{background:var(--surface);border:1px solid var(--line);border-radius:8px;
+          padding:9px 13px;font-size:13.5px}
+.comp b{display:block;font-family:var(--serif);font-size:20px;font-weight:600}
+
+.nota{background:var(--surface-2);border-radius:9px;padding:16px 18px;margin-top:22px;
+      font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.nota b{color:var(--ink)}
+footer{max-width:860px;margin:0 auto;padding:0 18px 40px;font-size:13px;color:var(--ink-3)}
+</style>
+</head>
+<body>
+
+<header><div class="hin">
+  <div class="kick">Momento de los eventos · Neugarten, Moore y Lowe</div>
+  <h1>El reloj social</h1>
+</div></header>
+
+<main>
+  <p class="intro">¿A qué edad se espera que ocurra cada uno de estos hitos? Respondan por
+     separado para una mujer y para un hombre.</p>
+  <p class="aviso">No se trata de a qué edad querrías vos que pase, sino de qué edad crees
+     que espera la gente. Nada de lo que muevas se guarda ni se envía.</p>
+
+  <div id="hitos"></div>
+
+  <div class="resumen">
+    <div class="rt" id="rt">Muevan los controles</div>
+    <div class="rd" id="rd">El resultado aparece cuando ajusten al menos un hito.</div>
+    <div id="graf"></div>
+  </div>
+
+  <div class="dato">
+    <h3>Y en Colombia, ¿qué pasa de verdad?</h3>
+    <p>La edad media al primer hijo pasó de 22,7 años en 2005 a 24,4 en 2024. En Bogotá
+       llega a 26,2. Comparen esas cifras con la edad que ustedes acaban de fijar.</p>
+    <div class="comp">
+      <div>Colombia<b>24,4</b></div>
+      <div>Bogotá<b>26,2</b></div>
+      <div id="tuyo">Su respuesta<b>—</b></div>
+    </div>
+    <p class="cita">DANE (2025). Boletín técnico. Estadísticas Vitales (EEVV), año 2024
+       preliminar.</p>
+  </div>
+
+  <div class="nota">
+    <b>Por qué importa:</b> Neugarten, Moore y Lowe sostienen que el impacto psicológico de
+    un hecho vital no depende tanto del hecho como de si ocurre dentro o fuera del calendario
+    que el entorno da por supuesto. Un evento a destiempo deja a la persona sin guion, sin
+    pares en la misma situación y sin reconocimiento social del rol; de ahí la crisis, y no
+    del acontecimiento en sí.
+  </div>
+</main>
+
+<footer>Este ejercicio no mide lo que ustedes desean, sino lo que perciben como esperado.
+  Nada se guarda ni se envía.</footer>
+
+<script>
+"use strict";
+
+var HITOS = [
+  {k:"casa",     l:"Irse de la casa de los padres", corto:"Casa"},
+  {k:"estudios", l:"Terminar los estudios",         corto:"Estudios"},
+  {k:"empleo",   l:"Tener un empleo estable",       corto:"Empleo"},
+  {k:"pareja",   l:"Convivir con una pareja",       corto:"Pareja"},
+  {k:"hijo",     l:"Tener el primer hijo",          corto:"Primer hijo"}
+];
+var COLS = [{k:"m", l:"Mujer", c:"--a"}, {k:"h", l:"Hombre", c:"--b"}];
+var MIN = 15, MAX = 45;
+
+var estado = {};
+HITOS.forEach(function(h){ estado[h.k] = {m:25, h:25}; });
+var tocado = false;
+
+function esc(x){
+  return String(x==null?"":x).replace(/[&<>"]/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+  });
+}
+
+function pintar(){
+  document.getElementById("hitos").innerHTML = HITOS.map(function(h){
+    return '<div class="card" data-h="'+h.k+'">'+
+      '<div class="hito">'+esc(h.l)+'</div>'+
+      COLS.map(function(col){
+        var v = estado[h.k][col.k];
+        return '<div class="fila" style="--c:var('+col.c+')">'+
+          '<span class="et">'+col.l+'</span>'+
+          '<input type="range" min="'+MIN+'" max="'+MAX+'" value="'+v+'" '+
+          'data-h="'+h.k+'" data-c="'+col.k+'" aria-label="'+col.l+', '+esc(h.l)+'">'+
+          '<span class="ed" data-ed="'+h.k+'-'+col.k+'">'+v+' años</span>'+
+          '</div>';
+      }).join("")+
+      '<div class="brecha" data-br="'+h.k+'"></div>'+
+      '</div>';
+  }).join("");
+
+  Array.prototype.forEach.call(document.querySelectorAll("input[type=range]"), function(r){
+    r.addEventListener("input", function(){
+      estado[r.dataset.h][r.dataset.c] = +r.value;
+      tocado = true;
+      actualizar();
+    });
+  });
+  actualizar();
+}
+
+function brecha(k){ return estado[k].h - estado[k].m; }
+
+function actualizar(){
+  HITOS.forEach(function(h){
+    COLS.forEach(function(col){
+      var e = document.querySelector('[data-ed="'+h.k+'-'+col.k+'"]');
+      if (e) e.textContent = estado[h.k][col.k] + " años";
+    });
+    var d = brecha(h.k), el = document.querySelector('[data-br="'+h.k+'"]');
+    if (!el) return;
+    if (d === 0) el.innerHTML = "Misma edad para los dos.";
+    else el.innerHTML = "Diferencia de <b>" + Math.abs(d) + (Math.abs(d)===1?" año":" años") +
+      "</b>: su reloj se lo concede más tarde " + (d > 0 ? "al hombre." : "a la mujer.");
+  });
+
+  var t = document.getElementById("tuyo");
+  if (t) t.innerHTML = "Su respuesta<b>" +
+    ((estado.hijo.m + estado.hijo.h) / 2).toFixed(1).replace(".", ",") + "</b>";
+
+  var rt = document.getElementById("rt"), rd = document.getElementById("rd");
+  if (!tocado) {
+    rt.textContent = "Muevan los controles";
+    rd.textContent = "El resultado aparece cuando ajusten al menos un hito.";
+    document.getElementById("graf").innerHTML = "";
+    return;
+  }
+
+  var difs = HITOS.map(function(h){ return brecha(h.k); });
+  var suma = difs.reduce(function(a, x){ return a + x; }, 0);
+  var prom = suma / difs.length;
+  var mayor = HITOS[0], maxAbs = Math.abs(difs[0]);
+  difs.forEach(function(d, i){ if (Math.abs(d) > maxAbs) { maxAbs = Math.abs(d); mayor = HITOS[i]; } });
+
+  if (Math.abs(prom) < 0.2) {
+    rt.textContent = "Su reloj no distingue";
+    rd.textContent = "Fijaron prácticamente las mismas edades para ambos. Vale la pena " +
+      "preguntarse si eso coincide con lo que observan alrededor.";
+  } else {
+    var quien = prom > 0 ? "a los hombres" : "a las mujeres";
+    rt.textContent = "Su reloj le da " + Math.abs(prom).toFixed(1).replace(".", ",") +
+                     " años más " + quien;
+    rd.textContent = "La diferencia más grande está en «" + mayor.l.toLowerCase() + "», con " +
+      maxAbs + (maxAbs === 1 ? " año" : " años") + " de distancia.";
+  }
+  document.getElementById("graf").innerHTML = grafico();
+}
+
+function grafico(){
+  var W = 320, FILA = 46, TOP = 16, IZQ = 8, DER = 12;
+  var H = TOP + HITOS.length * FILA + 26;
+  var x0 = IZQ, x1 = W - DER;
+  function px(edad){ return x0 + (edad - MIN) / (MAX - MIN) * (x1 - x0); }
+
+  var out = '<svg class="graf" viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
+            'aria-label="Edades esperadas para cada hito, por sexo">';
+
+  for (var e = MIN; e <= MAX; e += 5) {
+    out += '<line x1="' + px(e) + '" y1="' + TOP + '" x2="' + px(e) + '" y2="' +
+           (TOP + HITOS.length * FILA - 14) + '" stroke="var(--line)" stroke-width="1"/>' +
+           '<text x="' + px(e) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="10" ' +
+           'fill="var(--ink-3)" font-family="var(--sans)">' + e + '</text>';
+  }
+
+  HITOS.forEach(function(h, i){
+    var y = TOP + i * FILA + 26;
+    var xm = px(estado[h.k].m), xh = px(estado[h.k].h);
+    out += '<text x="' + x0 + '" y="' + (y - 12) + '" font-size="11" font-weight="600" ' +
+           'fill="var(--ink-2)" font-family="var(--sans)">' + esc(h.corto) + '</text>';
+    out += '<line x1="' + Math.min(xm, xh) + '" y1="' + y + '" x2="' + Math.max(xm, xh) +
+           '" y2="' + y + '" stroke="var(--line-2)" stroke-width="3" stroke-linecap="round"/>';
+    out += '<circle cx="' + xm + '" cy="' + y + '" r="6" fill="var(--a)"/>';
+    out += '<circle cx="' + xh + '" cy="' + y + '" r="6" fill="var(--b)"/>';
+  });
+
+  out += '<circle cx="' + (x0 + 6) + '" cy="' + (TOP - 8) + '" r="5" fill="var(--a)"/>' +
+         '<text x="' + (x0 + 16) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
+         'fill="var(--ink-2)" font-family="var(--sans)">Mujer</text>' +
+         '<circle cx="' + (x0 + 62) + '" cy="' + (TOP - 8) + '" r="5" fill="var(--b)"/>' +
+         '<text x="' + (x0 + 72) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
+         'fill="var(--ink-2)" font-family="var(--sans)">Hombre</text>';
+
+  return out + '</svg>';
+}
+
+pintar();
+</script>
+</body>
+</html>
