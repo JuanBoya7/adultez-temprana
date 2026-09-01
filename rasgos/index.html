@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Los cinco grandes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F7F9FB; --surface:#FFFFFF; --surface-2:#EDF2F6;
+  --ink:#1F2C36; --ink-2:#53646F; --ink-3:#7E8F9B;
+  --line:#DCE4EA; --line-2:#C4D0D8;
+  --sello:#A6462F; --sello-b:#FAECE8;
+  --antes:#7E8F9B; --hoy:#A86828;
+  --d1:#3A6E99; --d2:#A8517B; --d3:#2A7D71; --d4:#865DA8; --d5:#4B6C38;
+  --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --serif:"Newsreader",Georgia,serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+     font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;line-height:1.18;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--sello);outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+header{background:var(--surface);border-bottom:1px solid var(--line);padding:14px 18px}
+.hin{max-width:860px;margin:0 auto}
+.kick{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+header h1{font-size:21px;margin-top:2px}
+
+main{max-width:860px;margin:0 auto;padding:26px 18px 80px}
+.intro{font-family:var(--serif);font-size:19px;color:var(--ink-2);line-height:1.5;
+       margin-bottom:16px;max-width:62ch}
+
+.alerta{border:1px solid var(--sello);background:var(--sello-b);border-radius:10px;
+        padding:15px 18px;margin-bottom:24px;font-size:14px;line-height:1.5;color:var(--ink)}
+.alerta b{display:block;font-family:var(--serif);font-size:17px;margin-bottom:4px;color:var(--sello)}
+
+.item{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+      padding:14px 16px;margin-bottom:9px}
+.item .tx{font-size:15.5px;line-height:1.4;margin-bottom:10px}
+.item .tx i{font-style:normal;color:var(--ink-3);font-size:12.5px;margin-right:7px;
+            font-variant-numeric:tabular-nums}
+.esc{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.esc button{background:var(--paper);border:1px solid var(--line-2);border-radius:7px;
+            padding:9px 2px;font-size:11.5px;line-height:1.15;color:var(--ink-2)}
+.esc button:hover{border-color:var(--ink-3)}
+.esc button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);
+            color:var(--paper);font-weight:600}
+
+.avance{position:sticky;bottom:0;background:var(--paper);padding:12px 0 4px;
+        font-size:13.5px;color:var(--ink-3)}
+.barra{height:5px;background:var(--surface-2);border-radius:3px;overflow:hidden;margin-top:6px}
+.barra span{display:block;height:100%;background:var(--sello);border-radius:3px;width:0}
+
+.bloque{margin-top:30px}
+.bloque h2{font-size:25px;margin-bottom:6px}
+.bloque .sub{font-size:14.5px;color:var(--ink-2);line-height:1.5;margin-bottom:16px;max-width:62ch}
+.oculto{display:none}
+
+.dim{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+     padding:15px 17px;margin-bottom:10px}
+.dim .dn{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--c);margin-bottom:2px}
+.dim .dd{font-size:13px;color:var(--ink-3);line-height:1.4;margin-bottom:10px}
+.dim .fila{display:grid;grid-template-columns:96px 1fr 42px;gap:10px;align-items:center}
+.dim .et{font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.dim .val{font-size:13.5px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+input[type=range]{width:100%;height:26px;background:transparent;-webkit-appearance:none;appearance:none}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:var(--surface-2)}
+input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:var(--surface-2)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;
+  border-radius:50%;background:var(--antes);border:3px solid #fff;
+  box-shadow:0 1px 4px rgba(31,44,54,.3);margin-top:-9px}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--antes);
+  border:3px solid #fff;box-shadow:0 1px 4px rgba(31,44,54,.3)}
+
+.resumen{background:var(--surface);border:2px solid var(--sello);border-radius:10px;
+         padding:20px;margin-top:18px}
+.resumen .rt{font-family:var(--serif);font-size:25px;font-weight:600;color:var(--sello);
+             line-height:1.15;margin-bottom:6px}
+.resumen .rd{font-size:14.5px;color:var(--ink-2);line-height:1.5}
+svg.graf{width:100%;height:auto;display:block;margin-top:16px}
+
+.nota{background:var(--surface-2);border-radius:9px;padding:16px 18px;margin-top:22px;
+      font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.nota b{color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header><div class="hin">
+  <div class="kick">Modelo de los cinco factores · Costa y McCrae</div>
+  <h1>Los cinco grandes</h1>
+</div></header>
+
+<main>
+  <p class="intro">Quince frases. Marquen en cada una qué tanto se parece a ustedes hoy.</p>
+
+  <div class="alerta">
+    <b>Esto no es un test</b>
+    Los inventarios que miden estas cinco dimensiones tienen decenas de ítems, baremos y
+    estudios de validez. Quince frases sin ninguna de esas propiedades no miden la
+    personalidad de nadie: sirven para entender de qué habla el modelo, no para describir a
+    quien responde. Lean el resultado como una ilustración del concepto.
+  </div>
+
+  <div id="items"></div>
+
+  <div class="avance" id="avance">
+    <span id="avtx">0 de 15 respondidas</span>
+    <div class="barra"><span id="avba"></span></div>
+  </div>
+
+  <section class="bloque oculto" id="bloque2">
+    <h2>¿Y hace cinco años?</h2>
+    <p class="sub">Este es su perfil de hoy. Muevan cada control hasta donde creen que
+       estaba hace cinco años.</p>
+    <div id="dims"></div>
+
+    <div class="resumen">
+      <div class="rt" id="rt">—</div>
+      <div class="rd" id="rd"></div>
+      <div id="graf"></div>
+    </div>
+  </section>
+
+  <div class="nota">
+    <b>La pregunta que importa:</b> el modelo sostiene que estas cinco dimensiones son
+    relativamente estables en la adultez. Si en su gráfico algo se movió mucho, hay dos
+    lecturas posibles y conviene distinguirlas: que el rasgo haya cambiado de verdad, o que
+    estén describiendo un estado pasajero —una época difícil, un duelo, una etapa— y
+    confundiéndolo con la forma de ser. Esa distinción entre rasgo y estado es justamente lo
+    que un instrumento validado intenta resolver, y estas quince frases no pueden.
+  </div>
+</main>
+
+<script>
+"use strict";
+
+var DIMS = [
+  {k:"n", l:"Neuroticismo",   c:"--d1",
+   d:"Tendencia a experimentar ansiedad, irritabilidad e inestabilidad emocional."},
+  {k:"e", l:"Extraversión",   c:"--d2",
+   d:"Cordialidad, gregarismo, asertividad, búsqueda de estimulación."},
+  {k:"o", l:"Apertura",       c:"--d3",
+   d:"Disposición a probar lo nuevo y a considerar ideas distintas."},
+  {k:"c", l:"Escrupulosidad", c:"--d4",
+   d:"Orden, competencia, cumplimiento, autodisciplina."},
+  {k:"a", l:"Amabilidad",     c:"--d5",
+   d:"Confianza, altruismo, modestia, condescendencia."}
+];
+
+var ITEMS = [
+  {d:"n", t:"Me preocupo con facilidad por cosas que podrían salir mal."},
+  {d:"e", t:"Me resulta fácil empezar una conversación con desconocidos."},
+  {d:"o", t:"Me atraen las ideas que ponen en duda lo que ya pienso."},
+  {d:"c", t:"Cumplo lo que prometo, aunque me cueste."},
+  {d:"a", t:"Confío en las intenciones de los demás."},
+  {d:"n", t:"Mi ánimo cambia con frecuencia."},
+  {d:"e", t:"Prefiero los planes con mucha gente a los planes tranquilos."},
+  {d:"o", t:"Disfruto probar cosas que nunca he hecho."},
+  {d:"c", t:"Mantengo mis cosas y mis tiempos en orden."},
+  {d:"a", t:"Cedo con facilidad para evitar un conflicto."},
+  {d:"n", t:"Me cuesta calmarme cuando algo me altera."},
+  {d:"e", t:"Suelo tomar la iniciativa dentro de un grupo."},
+  {d:"o", t:"El arte, la música o la literatura ocupan un lugar importante en mi vida."},
+  {d:"c", t:"Termino lo que empiezo, aunque deje de interesarme."},
+  {d:"a", t:"Me detengo a ayudar a alguien aunque tenga afán."}
+];
+
+var ESCALA = [
+  {v:0,   l:"Nada"},
+  {v:25,  l:"Poco"},
+  {v:50,  l:"A veces"},
+  {v:75,  l:"Bastante"},
+  {v:100, l:"Mucho"}
+];
+
+var respuestas = {};      // índice de ítem -> valor
+var antes = {};           // dimensión -> valor de hace cinco años
+var tocado = false;
+
+function esc(x){
+  return String(x==null?"":x).replace(/[&<>"]/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
+  });
+}
+
+function hoy(dim){
+  var vals = ITEMS.map(function(it, i){ return it.d === dim ? respuestas[i] : undefined; })
+                  .filter(function(v){ return v !== undefined; });
+  if (!vals.length) return 50;
+  return Math.round(vals.reduce(function(a, b){ return a + b; }, 0) / vals.length);
+}
+
+function completas(){
+  return ITEMS.filter(function(_, i){ return respuestas[i] !== undefined; }).length;
+}
+
+function pintarItems(){
+  document.getElementById("items").innerHTML = ITEMS.map(function(it, i){
+    return '<div class="item">' +
+      '<div class="tx"><i>' + (i + 1) + '</i>' + esc(it.t) + '</div>' +
+      '<div class="esc">' + ESCALA.map(function(o){
+        return '<button type="button" data-i="' + i + '" data-v="' + o.v + '" ' +
+               'aria-pressed="' + (respuestas[i] === o.v) + '">' + o.l + '</button>';
+      }).join("") + '</div></div>';
+  }).join("");
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-v]"), function(b){
+    b.onclick = function(){
+      var i = +b.dataset.i;
+      respuestas[i] = +b.dataset.v;
+      Array.prototype.forEach.call(
+        document.querySelectorAll('[data-i="' + i + '"]'), function(x){
+          x.setAttribute("aria-pressed", +x.dataset.v === respuestas[i]);
+        });
+      avanzar();
+    };
+  });
+}
+
+function avanzar(){
+  var n = completas();
+  document.getElementById("avtx").textContent = n + " de " + ITEMS.length + " respondidas";
+  document.getElementById("avba").style.width = (n / ITEMS.length * 100) + "%";
+  if (n === ITEMS.length) {
+    var b2 = document.getElementById("bloque2");
+    if (b2.classList.contains("oculto")) {
+      b2.classList.remove("oculto");
+      DIMS.forEach(function(d){ if (antes[d.k] === undefined) antes[d.k] = hoy(d.k); });
+      pintarDims();
+      b2.scrollIntoView({behavior: "smooth", block: "start"});
+    }
+    actualizar();
+  }
+}
+
+function pintarDims(){
+  document.getElementById("dims").innerHTML = DIMS.map(function(d){
+    return '<div class="dim" style="--c:var(' + d.c + ')">' +
+      '<div class="dn">' + d.l + '</div>' +
+      '<div class="dd">' + esc(d.d) + '</div>' +
+      '<div class="fila"><span class="et">Hoy</span>' +
+      '<div style="height:6px;background:var(--surface-2);border-radius:3px">' +
+      '<div style="height:6px;border-radius:3px;background:var(' + d.c + ');width:' +
+      hoy(d.k) + '%"></div></div>' +
+      '<span class="val">' + hoy(d.k) + '</span></div>' +
+      '<div class="fila" style="margin-top:6px"><span class="et">Hace 5 años</span>' +
+      '<input type="range" min="0" max="100" step="5" value="' + antes[d.k] + '" ' +
+      'data-d="' + d.k + '" aria-label="' + d.l + ' hace cinco años">' +
+      '<span class="val" data-va="' + d.k + '">' + antes[d.k] + '</span></div>' +
+      '</div>';
+  }).join("");
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-d]"), function(r){
+    r.addEventListener("input", function(){
+      antes[r.dataset.d] = +r.value;
+      tocado = true;
+      var v = document.querySelector('[data-va="' + r.dataset.d + '"]');
+      if (v) v.textContent = r.value;
+      actualizar();
+    });
+  });
+}
+
+function actualizar(){
+  var difs = DIMS.map(function(d){ return hoy(d.k) - antes[d.k]; });
+  var mayor = 0;
+  difs.forEach(function(x, i){ if (Math.abs(x) > Math.abs(difs[mayor])) mayor = i; });
+
+  var rt = document.getElementById("rt"), rd = document.getElementById("rd");
+  if (!tocado) {
+    rt.textContent = "Su perfil de hoy";
+    rd.textContent = "Muevan los controles para ubicar dónde estaba cada dimensión hace " +
+                     "cinco años.";
+  } else if (Math.abs(difs[mayor]) < 5) {
+    rt.textContent = "Casi nada se movió";
+    rd.textContent = "Según sus respuestas, el perfil es prácticamente el mismo. El modelo " +
+                     "esperaría justamente eso en un lapso corto.";
+  } else {
+    var d = DIMS[mayor];
+    rt.textContent = "Lo que más se movió: " + d.l.toLowerCase();
+    rd.textContent = Math.abs(difs[mayor]) + " puntos " +
+      (difs[mayor] > 0 ? "hacia arriba" : "hacia abajo") +
+      ". ¿Cambió el rasgo, o cambió el momento por el que estaban pasando?";
+  }
+  document.getElementById("graf").innerHTML = grafico();
+}
+
+function grafico(){
+  var W = 320, FILA = 44, TOP = 18, IZQ = 8, DER = 12;
+  var H = TOP + DIMS.length * FILA + 24;
+  var x0 = IZQ, x1 = W - DER;
+  function px(v){ return x0 + v / 100 * (x1 - x0); }
+
+  var out = '<svg class="graf" viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
+            'aria-label="Comparación del perfil de hoy con el de hace cinco años">';
+
+  for (var v = 0; v <= 100; v += 25) {
+    out += '<line x1="' + px(v) + '" y1="' + TOP + '" x2="' + px(v) + '" y2="' +
+           (TOP + DIMS.length * FILA - 14) + '" stroke="var(--line)" stroke-width="1"/>' +
+           '<text x="' + px(v) + '" y="' + (H - 7) + '" text-anchor="middle" font-size="9.5" ' +
+           'fill="var(--ink-3)" font-family="var(--sans)">' + v + '</text>';
+  }
+
+  DIMS.forEach(function(d, i){
+    var y = TOP + i * FILA + 25;
+    var xa = px(antes[d.k]), xh = px(hoy(d.k));
+    out += '<text x="' + x0 + '" y="' + (y - 12) + '" font-size="11" font-weight="600" ' +
+           'fill="var(--ink-2)" font-family="var(--sans)">' + d.l + '</text>';
+    out += '<line x1="' + Math.min(xa, xh) + '" y1="' + y + '" x2="' + Math.max(xa, xh) +
+           '" y2="' + y + '" stroke="var(--line-2)" stroke-width="3" stroke-linecap="round"/>';
+    out += '<circle cx="' + xa + '" cy="' + y + '" r="5.5" fill="var(--antes)"/>';
+    out += '<circle cx="' + xh + '" cy="' + y + '" r="6.5" fill="var(--hoy)"/>';
+  });
+
+  out += '<circle cx="' + (x0 + 6) + '" cy="' + (TOP - 8) + '" r="5" fill="var(--antes)"/>' +
+         '<text x="' + (x0 + 16) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
+         'fill="var(--ink-2)" font-family="var(--sans)">Hace 5 años</text>' +
+         '<circle cx="' + (x0 + 96) + '" cy="' + (TOP - 8) + '" r="5" fill="var(--hoy)"/>' +
+         '<text x="' + (x0 + 106) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
+         'fill="var(--ink-2)" font-family="var(--sans)">Hoy</text>';
+
+  return out + '</svg>';
+}
+
+pintarItems();
+avanzar();
+</script>
+</body>
+</html>
