@@ -270,26 +270,48 @@ function pintarDims(){
   });
 }
 
+/* El nivel se calcula sobre el promedio de cambio de las cinco dimensiones.
+   Se nombra como categoría, no como puntaje: una categoría se puede pedir a
+   mano alzada en el auditorio, un número suelto no. */
+var NIVELES = [
+  {max: 5,  t: "Perfiles casi idénticos",
+   d: "Su perfil no se movió. Es justo lo que el modelo predice… ¿o es que están " +
+      "recordando su pasado desde lo que son hoy?"},
+  {max: 15, t: "Cambio leve",
+   d: "Compatible con lo que sostiene el modelo: los rasgos perduran y se mueven poco " +
+      "en lapsos cortos."},
+  {max: 30, t: "Cambio moderado",
+   d: "Algo se corrió. Vale la pena preguntarse qué pasó en estos cinco años."},
+  {max: 101, t: "Cambio marcado",
+   d: "Su perfil se movió mucho para lo que el modelo esperaría. ¿Cambió el rasgo, o " +
+      "cambió la época que estaban viviendo?"}
+];
+
+function nivelDe(promedio){
+  for (var i = 0; i < NIVELES.length; i++) {
+    if (promedio < NIVELES[i].max) return NIVELES[i];
+  }
+  return NIVELES[NIVELES.length - 1];
+}
+
 function actualizar(){
   var difs = DIMS.map(function(d){ return hoy(d.k) - antes[d.k]; });
   var mayor = 0;
   difs.forEach(function(x, i){ if (Math.abs(x) > Math.abs(difs[mayor])) mayor = i; });
+  var promedio = difs.reduce(function(a, x){ return a + Math.abs(x); }, 0) / difs.length;
 
   var rt = document.getElementById("rt"), rd = document.getElementById("rd");
   if (!tocado) {
     rt.textContent = "Su perfil de hoy";
     rd.textContent = "Muevan los controles para ubicar dónde estaba cada dimensión hace " +
                      "cinco años.";
-  } else if (Math.abs(difs[mayor]) < 5) {
-    rt.textContent = "Sus dos perfiles se parecen";
-    rd.textContent = "Eso es lo que el modelo predice: los rasgos perduran. Pero un " +
-                     "parecido alto admite otra explicación, ¿cuál de las dos es la suya?";
   } else {
-    var d = DIMS[mayor];
-    rt.textContent = "Lo que más se movió: " + d.l.toLowerCase();
-    rd.textContent = Math.abs(difs[mayor]) + " puntos " +
-      (difs[mayor] > 0 ? "hacia arriba" : "hacia abajo") +
-      ". ¿Cambió el rasgo, o cambió el momento por el que estaban pasando?";
+    var n = nivelDe(promedio);
+    rt.textContent = n.t;
+    rd.textContent = n.d +
+      (Math.abs(difs[mayor]) >= 10
+        ? " La dimensión que más se movió fue " + DIMS[mayor].l.toLowerCase() + "."
+        : "");
   }
   document.getElementById("graf").innerHTML = grafico();
 }
