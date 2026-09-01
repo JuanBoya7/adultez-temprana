@@ -13,9 +13,6 @@
   --ink:#1F2C36; --ink-2:#53646F; --ink-3:#7E8F9B;
   --line:#DCE4EA; --line-2:#C4D0D8;
   --sello:#A6462F; --sello-b:#FAECE8;
-  --a:#865DA8; --a-b:#F0E9F8;      /* primera columna */
-  --b:#A86828; --b-b:#FAEEDD;      /* segunda columna */
-  --ok:#2A7D71;
   --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   --serif:"Newsreader",Georgia,serif;
 }
@@ -24,6 +21,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
      font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
 h1,h2,h3{font-family:var(--serif);font-weight:600;margin:0;line-height:1.18;text-wrap:balance}
 p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--sello);outline-offset:3px;border-radius:4px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
@@ -37,45 +35,55 @@ main{max-width:860px;margin:0 auto;padding:26px 18px 80px}
        margin-bottom:8px;max-width:62ch}
 .aviso{font-size:13.5px;color:var(--ink-3);line-height:1.45;margin-bottom:24px;max-width:62ch}
 
-.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;
-      padding:18px 20px;margin-bottom:14px}
-.hito{font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:14px}
+.caso{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+      padding:15px 17px;margin-bottom:10px}
+.caso .tx{font-size:16px;line-height:1.45;margin-bottom:11px}
+.caso .tx b{font-weight:600}
+.caso .tx i{font-style:normal;color:var(--ink-3);font-size:12.5px;margin-right:8px;
+            font-variant-numeric:tabular-nums}
+.esc{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.esc button{background:var(--paper);border:1px solid var(--line-2);border-radius:8px;
+            padding:11px 4px;font-size:13.5px;color:var(--ink-2)}
+.esc button:hover{border-color:var(--ink-3)}
+.esc button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);
+            color:var(--paper);font-weight:600}
 
-.fila{display:grid;grid-template-columns:74px 1fr 44px;gap:10px;align-items:center;
-      margin-bottom:9px}
-.fila .et{font-size:13px;font-weight:600;color:var(--c)}
-.fila .ed{font-size:14px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink-2)}
-input[type=range]{width:100%;height:26px;background:transparent;-webkit-appearance:none;appearance:none}
-input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:var(--surface-2)}
-input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:var(--surface-2)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:24px;height:24px;
-  border-radius:50%;background:var(--c);border:3px solid #fff;box-shadow:0 1px 4px rgba(31,44,54,.3);
-  margin-top:-9px}
-input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--c);
-  border:3px solid #fff;box-shadow:0 1px 4px rgba(31,44,54,.3)}
-.brecha{font-size:12.5px;color:var(--ink-3);margin-top:2px}
-.brecha b{color:var(--sello)}
+.avance{position:sticky;bottom:0;background:var(--paper);padding:12px 0 4px;
+        font-size:13.5px;color:var(--ink-3)}
+.barra{height:5px;background:var(--surface-2);border-radius:3px;overflow:hidden;margin-top:6px}
+.barra span{display:block;height:100%;background:var(--sello);border-radius:3px;width:0}
+
+.oculto{display:none}
+.bloque{margin-top:30px}
+.bloque h2{font-size:25px;margin-bottom:6px}
+.bloque .sub{font-size:14.5px;color:var(--ink-2);line-height:1.5;margin-bottom:18px;max-width:62ch}
+
+.par{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px;
+     background:var(--surface)}
+.par.dif{border-color:var(--sello);background:var(--sello-b)}
+.par .ph{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+         color:var(--ink-3);margin-bottom:9px}
+.par.dif .ph{color:var(--sello)}
+.par .lado{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;
+           padding:6px 0;border-bottom:1px solid var(--line)}
+.par .lado:last-child{border-bottom:0}
+.par .lado span{font-size:15.5px}
+.par .lado b{font-size:14px;font-weight:600;color:var(--ink-2);white-space:nowrap}
 
 .resumen{background:var(--surface);border:2px solid var(--sello);border-radius:10px;
-         padding:20px;margin:22px 0 14px}
-.resumen .rt{font-family:var(--serif);font-size:25px;font-weight:600;color:var(--sello);
+         padding:20px;margin-top:18px}
+.resumen .rt{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--sello);
              line-height:1.15;margin-bottom:6px}
 .resumen .rd{font-size:14.5px;color:var(--ink-2);line-height:1.5}
-svg.graf{width:100%;height:auto;display:block;margin-top:16px}
 
-.dato{background:var(--surface-2);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.dato{background:var(--surface-2);border-radius:10px;padding:18px 20px;margin-top:14px}
 .dato h3{font-size:19px;margin-bottom:8px}
 .dato p{font-size:14.5px;color:var(--ink-2);line-height:1.5}
 .dato .cita{font-size:12px;color:var(--ink-3);margin-top:9px}
-.comp{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.comp div{background:var(--surface);border:1px solid var(--line);border-radius:8px;
-          padding:9px 13px;font-size:13.5px}
-.comp b{display:block;font-family:var(--serif);font-size:20px;font-weight:600}
 
 .nota{background:var(--surface-2);border-radius:9px;padding:16px 18px;margin-top:22px;
       font-size:14.5px;color:var(--ink-2);line-height:1.5}
 .nota b{color:var(--ink)}
-footer{max-width:860px;margin:0 auto;padding:0 18px 40px;font-size:13px;color:var(--ink-3)}
 </style>
 </head>
 <body>
@@ -86,176 +94,147 @@ footer{max-width:860px;margin:0 auto;padding:0 18px 40px;font-size:13px;color:va
 </div></header>
 
 <main>
-  <p class="intro">¿A qué edad se espera que ocurra cada uno de estos hitos? Respondan por
-     separado para una mujer y para un hombre.</p>
-  <p class="aviso">No se trata de la edad que ustedes quisieran, sino de la que creen que el
-     entorno da por supuesta.</p>
+  <p class="intro">Ocho situaciones. Marquen en cada una si el hecho ocurre temprano, a
+     tiempo o tarde.</p>
+  <p class="aviso">No respondan según lo que a ustedes les parezca deseable, sino según cómo
+     lo vería la mayoría de la gente.</p>
 
-  <div id="hitos"></div>
+  <div id="casos"></div>
 
-  <div class="resumen">
-    <div class="rt" id="rt">Muevan los controles</div>
-    <div class="rd" id="rd">El resultado aparece cuando ajusten al menos un hito.</div>
-    <div id="graf"></div>
+  <div class="avance" id="avance">
+    <span id="avtx">0 de 8 respondidas</span>
+    <div class="barra"><span id="avba"></span></div>
   </div>
 
-  <div class="dato">
-    <h3>Y en Colombia, ¿qué pasa de verdad?</h3>
-    <p>La edad media al primer hijo pasó de 22,7 años en 2005 a 24,4 en 2024. En Bogotá
-       llega a 26,2. Comparen esas cifras con la edad que ustedes acaban de fijar.</p>
-    <div class="comp">
-      <div>Colombia<b>24,4</b></div>
-      <div>Bogotá<b>26,2</b></div>
-      <div id="tuyo">Su respuesta<b>—</b></div>
+  <section class="bloque oculto" id="revelacion">
+    <h2>Los casos venían de a dos</h2>
+    <p class="sub">Cada par era la misma situación, con la misma edad y el mismo hecho. Lo
+       único que cambiaba era el nombre.</p>
+    <div id="pares"></div>
+
+    <div class="resumen">
+      <div class="rt" id="rt"></div>
+      <div class="rd" id="rd"></div>
     </div>
-    <p class="cita">DANE (2025). Boletín técnico. Estadísticas Vitales (EEVV), año 2024
-       preliminar.</p>
-  </div>
+
+    <div class="dato">
+      <h3>Un dato para contrastar</h3>
+      <p>En Colombia la edad media al primer hijo pasó de 22,7 años en 2005 a 24,4 en 2024.
+         En Bogotá llega a 26,2.</p>
+      <p class="cita">DANE (2025). Boletín técnico. Estadísticas Vitales (EEVV), año 2024
+         preliminar.</p>
+    </div>
+  </section>
 
   <div class="nota">
-    <b>Sobre el ejercicio:</b> las edades que fijaron no son un dato sobre ustedes, sino
-    sobre lo que perciben como esperado a su alrededor. El gráfico compara las dos columnas
-    hito por hito.
+    <b>Sobre el ejercicio:</b> las respuestas no describen a las personas de los casos, sino
+    el calendario que ustedes reconocen como vigente a su alrededor.
   </div>
 </main>
 
 <script>
 "use strict";
 
-var HITOS = [
-  {k:"casa",     l:"Irse de la casa de los padres", corto:"Casa"},
-  {k:"estudios", l:"Terminar los estudios",         corto:"Estudios"},
-  {k:"empleo",   l:"Tener un empleo estable",       corto:"Empleo"},
-  {k:"pareja",   l:"Convivir con una pareja",       corto:"Pareja"},
-  {k:"hijo",     l:"Tener el primer hijo",          corto:"Primer hijo"}
+/* Los pares se presentan intercalados: si se vieran juntos, la comparación sería
+   evidente y todos marcarían igual. El orden es fijo, para que todo el grupo
+   responda la misma secuencia. */
+var CASOS = [
+  {par:"hijo",    n:"Andrea",    t:"<b>Andrea</b> tiene su primer hijo a los 39 años."},
+  {par:"casa",    n:"Daniel",    t:"<b>Daniel</b> se va de la casa de sus padres a los 32 años."},
+  {par:"pareja",  n:"Camila",    t:"<b>Camila</b> se casa a los 19 años."},
+  {par:"estudio", n:"Valentín",  t:"<b>Valentín</b> termina su carrera profesional a los 44 años."},
+  {par:"hijo",    n:"Andrés",    t:"<b>Andrés</b> tiene su primer hijo a los 39 años."},
+  {par:"pareja",  n:"Camilo",    t:"<b>Camilo</b> se casa a los 19 años."},
+  {par:"estudio", n:"Valentina", t:"<b>Valentina</b> termina su carrera profesional a los 44 años."},
+  {par:"casa",    n:"Daniela",   t:"<b>Daniela</b> se va de la casa de sus padres a los 32 años."}
 ];
-var COLS = [{k:"m", l:"Mujer", c:"--a"}, {k:"h", l:"Hombre", c:"--b"}];
-var MIN = 15, MAX = 45;
 
-var estado = {};
-HITOS.forEach(function(h){ estado[h.k] = {m:25, h:25}; });
-var tocado = false;
+var PARES = [
+  {k:"hijo",    l:"Primer hijo a los 39"},
+  {k:"casa",    l:"Salir de la casa a los 32"},
+  {k:"pareja",  l:"Casarse a los 19"},
+  {k:"estudio", l:"Terminar la carrera a los 44"}
+];
 
-function esc(x){
-  return String(x==null?"":x).replace(/[&<>"]/g, function(c){
-    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];
-  });
+var OPCIONES = ["Temprano", "A tiempo", "Tarde"];
+var respuestas = {};
+
+function completas(){
+  return CASOS.filter(function(_, i){ return respuestas[i] !== undefined; }).length;
 }
 
 function pintar(){
-  document.getElementById("hitos").innerHTML = HITOS.map(function(h){
-    return '<div class="card" data-h="'+h.k+'">'+
-      '<div class="hito">'+esc(h.l)+'</div>'+
-      COLS.map(function(col){
-        var v = estado[h.k][col.k];
-        return '<div class="fila" style="--c:var('+col.c+')">'+
-          '<span class="et">'+col.l+'</span>'+
-          '<input type="range" min="'+MIN+'" max="'+MAX+'" value="'+v+'" '+
-          'data-h="'+h.k+'" data-c="'+col.k+'" aria-label="'+col.l+', '+esc(h.l)+'">'+
-          '<span class="ed" data-ed="'+h.k+'-'+col.k+'">'+v+' años</span>'+
-          '</div>';
-      }).join("")+
-      '<div class="brecha" data-br="'+h.k+'"></div>'+
-      '</div>';
+  document.getElementById("casos").innerHTML = CASOS.map(function(c, i){
+    return '<div class="caso">' +
+      '<div class="tx"><i>' + (i + 1) + '</i>' + c.t + '</div>' +
+      '<div class="esc">' + OPCIONES.map(function(o){
+        return '<button type="button" data-i="' + i + '" data-o="' + o + '" ' +
+               'aria-pressed="' + (respuestas[i] === o) + '">' + o + '</button>';
+      }).join("") + '</div></div>';
   }).join("");
 
-  Array.prototype.forEach.call(document.querySelectorAll("input[type=range]"), function(r){
-    r.addEventListener("input", function(){
-      estado[r.dataset.h][r.dataset.c] = +r.value;
-      tocado = true;
-      actualizar();
-    });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-o]"), function(b){
+    b.onclick = function(){
+      var i = +b.dataset.i;
+      respuestas[i] = b.dataset.o;
+      Array.prototype.forEach.call(
+        document.querySelectorAll('[data-i="' + i + '"]'), function(x){
+          x.setAttribute("aria-pressed", x.dataset.o === respuestas[i]);
+        });
+      avanzar();
+    };
   });
-  actualizar();
+  avanzar();
 }
 
-function brecha(k){ return estado[k].h - estado[k].m; }
+function avanzar(){
+  var n = completas();
+  document.getElementById("avtx").textContent = n + " de " + CASOS.length + " respondidas";
+  document.getElementById("avba").style.width = (n / CASOS.length * 100) + "%";
+  if (n === CASOS.length) revelar();
+}
 
-function actualizar(){
-  HITOS.forEach(function(h){
-    COLS.forEach(function(col){
-      var e = document.querySelector('[data-ed="'+h.k+'-'+col.k+'"]');
-      if (e) e.textContent = estado[h.k][col.k] + " años";
-    });
-    var d = brecha(h.k), el = document.querySelector('[data-br="'+h.k+'"]');
-    if (!el) return;
-    if (d === 0) el.innerHTML = "Misma edad para los dos.";
-    else el.innerHTML = "Diferencia de <b>" + Math.abs(d) + (Math.abs(d)===1?" año":" años") +
-      "</b>: su reloj se lo concede más tarde " + (d > 0 ? "al hombre." : "a la mujer.");
+function ladosDe(k){
+  var out = [];
+  CASOS.forEach(function(c, i){
+    if (c.par === k) out.push({n: c.n, r: respuestas[i]});
   });
+  return out;
+}
 
-  var t = document.getElementById("tuyo");
-  if (t) t.innerHTML = "Su respuesta<b>" +
-    ((estado.hijo.m + estado.hijo.h) / 2).toFixed(1).replace(".", ",") + "</b>";
+function revelar(){
+  var bloque = document.getElementById("revelacion");
+  var primeraVez = bloque.classList.contains("oculto");
+  bloque.classList.remove("oculto");
+
+  var distintos = 0;
+  document.getElementById("pares").innerHTML = PARES.map(function(p){
+    var l = ladosDe(p.k);
+    var dif = l[0].r !== l[1].r;
+    if (dif) distintos++;
+    return '<div class="par' + (dif ? " dif" : "") + '">' +
+      '<div class="ph">' + p.l + (dif ? " · juicio distinto" : " · mismo juicio") + '</div>' +
+      l.map(function(x){
+        return '<div class="lado"><span>' + x.n + '</span><b>' + x.r + '</b></div>';
+      }).join("") + '</div>';
+  }).join("");
 
   var rt = document.getElementById("rt"), rd = document.getElementById("rd");
-  if (!tocado) {
-    rt.textContent = "Muevan los controles";
-    rd.textContent = "El resultado aparece cuando ajusten al menos un hito.";
-    document.getElementById("graf").innerHTML = "";
-    return;
-  }
-
-  var difs = HITOS.map(function(h){ return brecha(h.k); });
-  var prom = difs.reduce(function(a, x){ return a + x; }, 0) / difs.length;
-  var absProm = Math.abs(prom);
-  var mayor = 0;
-  difs.forEach(function(d, i){ if (Math.abs(d) > Math.abs(difs[mayor])) mayor = i; });
-
-  var nivel;
-  if (absProm < 1)        nivel = "Un solo reloj";
-  else if (absProm < 2.5) nivel = "Dos relojes casi iguales";
-  else if (absProm < 4.5) nivel = "Dos relojes distintos";
-  else                    nivel = "Dos relojes muy distintos";
-
-  rt.textContent = nivel;
-
-  if (absProm < 1) {
-    rd.textContent = "Fijaron prácticamente las mismas edades para los dos.";
+  if (distintos === 0) {
+    rt.textContent = "Un solo reloj";
+    rd.textContent = "Juzgó igual a las dos personas en los cuatro pares.";
+  } else if (distintos === 1) {
+    rt.textContent = "Un reloj con una excepción";
+    rd.textContent = "En tres pares juzgó igual; en uno cambió el veredicto.";
+  } else if (distintos < 4) {
+    rt.textContent = "Dos relojes";
+    rd.textContent = "En " + distintos + " de los cuatro pares el veredicto cambió con el nombre.";
   } else {
-    var quien = prom > 0 ? "el de los hombres" : "el de las mujeres";
-    rd.textContent = "En sus respuestas " + quien + " corre más tarde. La diferencia " +
-      "más grande está en «" + HITOS[mayor].l.toLowerCase() + "».";
+    rt.textContent = "Dos relojes, sin excepción";
+    rd.textContent = "En los cuatro pares el veredicto cambió con el nombre.";
   }
 
-  document.getElementById("graf").innerHTML = grafico();
-}
-
-function grafico(){
-  var W = 320, FILA = 37, TOP = 16, IZQ = 8, DER = 12;
-  var H = TOP + HITOS.length * FILA + 22;
-  var x0 = IZQ, x1 = W - DER;
-  function px(edad){ return x0 + (edad - MIN) / (MAX - MIN) * (x1 - x0); }
-
-  var out = '<svg class="graf" viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
-            'aria-label="Edades esperadas para cada hito, por sexo">';
-
-  for (var e = MIN; e <= MAX; e += 5) {
-    out += '<line x1="' + px(e) + '" y1="' + TOP + '" x2="' + px(e) + '" y2="' +
-           (TOP + HITOS.length * FILA - 14) + '" stroke="var(--line)" stroke-width="1"/>' +
-           '<text x="' + px(e) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="10" ' +
-           'fill="var(--ink-3)" font-family="var(--sans)">' + e + '</text>';
-  }
-
-  HITOS.forEach(function(h, i){
-    var y = TOP + i * FILA + 23;
-    var xm = px(estado[h.k].m), xh = px(estado[h.k].h);
-    out += '<text x="' + x0 + '" y="' + (y - 10) + '" font-size="10" font-weight="600" ' +
-           'fill="var(--ink-2)" font-family="var(--sans)">' + esc(h.corto) + '</text>';
-    out += '<line x1="' + Math.min(xm, xh) + '" y1="' + y + '" x2="' + Math.max(xm, xh) +
-           '" y2="' + y + '" stroke="var(--line-2)" stroke-width="2.5" stroke-linecap="round"/>';
-    out += '<circle cx="' + xm + '" cy="' + y + '" r="4.5" fill="var(--a)"/>';
-    out += '<circle cx="' + xh + '" cy="' + y + '" r="4.5" fill="var(--b)"/>';
-  });
-
-  out += '<circle cx="' + (x0 + 6) + '" cy="' + (TOP - 8) + '" r="4" fill="var(--a)"/>' +
-         '<text x="' + (x0 + 16) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
-         'fill="var(--ink-2)" font-family="var(--sans)">Mujer</text>' +
-         '<circle cx="' + (x0 + 62) + '" cy="' + (TOP - 8) + '" r="4" fill="var(--b)"/>' +
-         '<text x="' + (x0 + 72) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
-         'fill="var(--ink-2)" font-family="var(--sans)">Hombre</text>';
-
-  return out + '</svg>';
+  if (primeraVez) bloque.scrollIntoView({behavior: "smooth", block: "start"});
 }
 
 pintar();
