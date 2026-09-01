@@ -129,11 +129,13 @@ svg.graf{width:100%;height:auto;display:block;margin-top:16px}
   </section>
 
   <div class="nota">
-    <b>La pregunta que importa:</b> el modelo sostiene que estas cinco dimensiones son
-    relativamente estables en la adultez. Si en su gráfico algo se movió mucho, hay dos
-    lecturas posibles y conviene distinguirlas: que el rasgo haya cambiado de verdad, o que
-    estén describiendo un estado pasajero —una época difícil, un duelo, una etapa— y
-    confundiéndolo con la forma de ser. Esa distinción entre rasgo y estado es justamente lo
+    <b>La pregunta que importa:</b> el modelo sostiene que estos rasgos perduran, así que
+    lo esperable es que sus dos perfiles se parezcan. Ahora bien, ese parecido admite dos
+    lecturas y conviene distinguirlas: que los rasgos efectivamente hayan permanecido, o que
+    hayan reconstruido su pasado desde lo que son hoy, que es lo que solemos hacer al
+    recordarnos. Y si en cambio algo se movió mucho, la pregunta se invierte: ¿cambió el
+    rasgo, o cambió la época que estaban viviendo —una temporada difícil, un duelo— y la
+    están confundiendo con su forma de ser? Distinguir el rasgo del estado es justamente lo
     que un instrumento validado intenta resolver, y estas quince frases no pueden.
   </div>
 </main>
@@ -279,9 +281,9 @@ function actualizar(){
     rd.textContent = "Muevan los controles para ubicar dónde estaba cada dimensión hace " +
                      "cinco años.";
   } else if (Math.abs(difs[mayor]) < 5) {
-    rt.textContent = "Casi nada se movió";
-    rd.textContent = "Según sus respuestas, el perfil es prácticamente el mismo. El modelo " +
-                     "esperaría justamente eso en un lapso corto.";
+    rt.textContent = "Sus dos perfiles se parecen";
+    rd.textContent = "Eso es lo que el modelo predice: los rasgos perduran. Pero un " +
+                     "parecido alto admite otra explicación, ¿cuál de las dos es la suya?";
   } else {
     var d = DIMS[mayor];
     rt.textContent = "Lo que más se movió: " + d.l.toLowerCase();
