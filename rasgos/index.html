@@ -129,14 +129,9 @@ svg.graf{width:100%;height:auto;display:block;margin-top:16px}
   </section>
 
   <div class="nota">
-    <b>La pregunta que importa:</b> el modelo sostiene que estos rasgos perduran, así que
-    lo esperable es que sus dos perfiles se parezcan. Ahora bien, ese parecido admite dos
-    lecturas y conviene distinguirlas: que los rasgos efectivamente hayan permanecido, o que
-    hayan reconstruido su pasado desde lo que son hoy, que es lo que solemos hacer al
-    recordarnos. Y si en cambio algo se movió mucho, la pregunta se invierte: ¿cambió el
-    rasgo, o cambió la época que estaban viviendo —una temporada difícil, un duelo— y la
-    están confundiendo con su forma de ser? Distinguir el rasgo del estado es justamente lo
-    que un instrumento validado intenta resolver, y estas quince frases no pueden.
+    <b>Sobre el ejercicio:</b> el gráfico compara su perfil de hoy con el que ustedes
+    mismos ubicaron para hace cinco años. Ambas mediciones son autoinformes hechos en este
+    momento, con las limitaciones que eso implica y que ya señalamos arriba.
   </div>
 </main>
 
@@ -275,16 +270,13 @@ function pintarDims(){
    mano alzada en el auditorio, un número suelto no. */
 var NIVELES = [
   {max: 5,  t: "Perfiles casi idénticos",
-   d: "Su perfil no se movió. Es justo lo que el modelo predice… ¿o es que están " +
-      "recordando su pasado desde lo que son hoy?"},
+   d: "Las cinco dimensiones quedaron prácticamente donde estaban."},
   {max: 15, t: "Cambio leve",
-   d: "Compatible con lo que sostiene el modelo: los rasgos perduran y se mueven poco " +
-      "en lapsos cortos."},
+   d: "Hubo movimientos, pero pequeños en todas las dimensiones."},
   {max: 30, t: "Cambio moderado",
-   d: "Algo se corrió. Vale la pena preguntarse qué pasó en estos cinco años."},
+   d: "Algunas dimensiones se corrieron de forma apreciable."},
   {max: 101, t: "Cambio marcado",
-   d: "Su perfil se movió mucho para lo que el modelo esperaría. ¿Cambió el rasgo, o " +
-      "cambió la época que estaban viviendo?"}
+   d: "Su perfil de hoy y el de hace cinco años difieren bastante."}
 ];
 
 function nivelDe(promedio){
@@ -317,8 +309,8 @@ function actualizar(){
 }
 
 function grafico(){
-  var W = 320, FILA = 44, TOP = 18, IZQ = 8, DER = 12;
-  var H = TOP + DIMS.length * FILA + 24;
+  var W = 320, FILA = 37, TOP = 16, IZQ = 8, DER = 12;
+  var H = TOP + DIMS.length * FILA + 22;
   var x0 = IZQ, x1 = W - DER;
   function px(v){ return x0 + v / 100 * (x1 - x0); }
 
@@ -333,20 +325,20 @@ function grafico(){
   }
 
   DIMS.forEach(function(d, i){
-    var y = TOP + i * FILA + 25;
+    var y = TOP + i * FILA + 23;
     var xa = px(antes[d.k]), xh = px(hoy(d.k));
-    out += '<text x="' + x0 + '" y="' + (y - 12) + '" font-size="11" font-weight="600" ' +
+    out += '<text x="' + x0 + '" y="' + (y - 10) + '" font-size="10" font-weight="600" ' +
            'fill="var(--ink-2)" font-family="var(--sans)">' + d.l + '</text>';
     out += '<line x1="' + Math.min(xa, xh) + '" y1="' + y + '" x2="' + Math.max(xa, xh) +
-           '" y2="' + y + '" stroke="var(--line-2)" stroke-width="3" stroke-linecap="round"/>';
-    out += '<circle cx="' + xa + '" cy="' + y + '" r="5.5" fill="var(--antes)"/>';
-    out += '<circle cx="' + xh + '" cy="' + y + '" r="6.5" fill="var(--hoy)"/>';
+           '" y2="' + y + '" stroke="var(--line-2)" stroke-width="2.5" stroke-linecap="round"/>';
+    out += '<circle cx="' + xa + '" cy="' + y + '" r="4" fill="var(--antes)"/>';
+    out += '<circle cx="' + xh + '" cy="' + y + '" r="4" fill="var(--hoy)"/>';
   });
 
-  out += '<circle cx="' + (x0 + 6) + '" cy="' + (TOP - 8) + '" r="5" fill="var(--antes)"/>' +
+  out += '<circle cx="' + (x0 + 6) + '" cy="' + (TOP - 8) + '" r="4" fill="var(--antes)"/>' +
          '<text x="' + (x0 + 16) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
          'fill="var(--ink-2)" font-family="var(--sans)">Hace 5 años</text>' +
-         '<circle cx="' + (x0 + 96) + '" cy="' + (TOP - 8) + '" r="5" fill="var(--hoy)"/>' +
+         '<circle cx="' + (x0 + 96) + '" cy="' + (TOP - 8) + '" r="4" fill="var(--hoy)"/>' +
          '<text x="' + (x0 + 106) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
          'fill="var(--ink-2)" font-family="var(--sans)">Hoy</text>';
 

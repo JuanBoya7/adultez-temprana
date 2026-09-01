@@ -113,11 +113,9 @@ footer{max-width:860px;margin:0 auto;padding:0 18px 40px;font-size:13px;color:va
   </div>
 
   <div class="nota">
-    <b>Por qué importa:</b> Neugarten, Moore y Lowe sostienen que el impacto psicológico de
-    un hecho vital no depende tanto del hecho como de si ocurre dentro o fuera del calendario
-    que el entorno da por supuesto. Un evento a destiempo deja a la persona sin guion, sin
-    pares en la misma situación y sin reconocimiento social del rol; de ahí la crisis, y no
-    del acontecimiento en sí.
+    <b>Sobre el ejercicio:</b> las edades que fijaron no son un dato sobre ustedes, sino
+    sobre lo que perciben como esperado a su alrededor. El gráfico compara las dos columnas
+    hito por hito.
   </div>
 </main>
 
@@ -199,28 +197,33 @@ function actualizar(){
   }
 
   var difs = HITOS.map(function(h){ return brecha(h.k); });
-  var suma = difs.reduce(function(a, x){ return a + x; }, 0);
-  var prom = suma / difs.length;
-  var mayor = HITOS[0], maxAbs = Math.abs(difs[0]);
-  difs.forEach(function(d, i){ if (Math.abs(d) > maxAbs) { maxAbs = Math.abs(d); mayor = HITOS[i]; } });
+  var prom = difs.reduce(function(a, x){ return a + x; }, 0) / difs.length;
+  var absProm = Math.abs(prom);
+  var mayor = 0;
+  difs.forEach(function(d, i){ if (Math.abs(d) > Math.abs(difs[mayor])) mayor = i; });
 
-  if (Math.abs(prom) < 0.2) {
-    rt.textContent = "Su reloj no distingue";
-    rd.textContent = "Fijaron prácticamente las mismas edades para ambos. Vale la pena " +
-      "preguntarse si eso coincide con lo que observan alrededor.";
+  var nivel;
+  if (absProm < 1)        nivel = "Un solo reloj";
+  else if (absProm < 2.5) nivel = "Dos relojes casi iguales";
+  else if (absProm < 4.5) nivel = "Dos relojes distintos";
+  else                    nivel = "Dos relojes muy distintos";
+
+  rt.textContent = nivel;
+
+  if (absProm < 1) {
+    rd.textContent = "Fijaron prácticamente las mismas edades para los dos.";
   } else {
-    var quien = prom > 0 ? "a los hombres" : "a las mujeres";
-    rt.textContent = "Su reloj le da " + Math.abs(prom).toFixed(1).replace(".", ",") +
-                     " años más " + quien;
-    rd.textContent = "La diferencia más grande está en «" + mayor.l.toLowerCase() + "», con " +
-      maxAbs + (maxAbs === 1 ? " año" : " años") + " de distancia.";
+    var quien = prom > 0 ? "el de los hombres" : "el de las mujeres";
+    rd.textContent = "En sus respuestas " + quien + " corre más tarde. La diferencia " +
+      "más grande está en «" + HITOS[mayor].l.toLowerCase() + "».";
   }
+
   document.getElementById("graf").innerHTML = grafico();
 }
 
 function grafico(){
-  var W = 320, FILA = 46, TOP = 16, IZQ = 8, DER = 12;
-  var H = TOP + HITOS.length * FILA + 26;
+  var W = 320, FILA = 37, TOP = 16, IZQ = 8, DER = 12;
+  var H = TOP + HITOS.length * FILA + 22;
   var x0 = IZQ, x1 = W - DER;
   function px(edad){ return x0 + (edad - MIN) / (MAX - MIN) * (x1 - x0); }
 
@@ -235,20 +238,20 @@ function grafico(){
   }
 
   HITOS.forEach(function(h, i){
-    var y = TOP + i * FILA + 26;
+    var y = TOP + i * FILA + 23;
     var xm = px(estado[h.k].m), xh = px(estado[h.k].h);
-    out += '<text x="' + x0 + '" y="' + (y - 12) + '" font-size="11" font-weight="600" ' +
+    out += '<text x="' + x0 + '" y="' + (y - 10) + '" font-size="10" font-weight="600" ' +
            'fill="var(--ink-2)" font-family="var(--sans)">' + esc(h.corto) + '</text>';
     out += '<line x1="' + Math.min(xm, xh) + '" y1="' + y + '" x2="' + Math.max(xm, xh) +
-           '" y2="' + y + '" stroke="var(--line-2)" stroke-width="3" stroke-linecap="round"/>';
-    out += '<circle cx="' + xm + '" cy="' + y + '" r="6" fill="var(--a)"/>';
-    out += '<circle cx="' + xh + '" cy="' + y + '" r="6" fill="var(--b)"/>';
+           '" y2="' + y + '" stroke="var(--line-2)" stroke-width="2.5" stroke-linecap="round"/>';
+    out += '<circle cx="' + xm + '" cy="' + y + '" r="4.5" fill="var(--a)"/>';
+    out += '<circle cx="' + xh + '" cy="' + y + '" r="4.5" fill="var(--b)"/>';
   });
 
-  out += '<circle cx="' + (x0 + 6) + '" cy="' + (TOP - 8) + '" r="5" fill="var(--a)"/>' +
+  out += '<circle cx="' + (x0 + 6) + '" cy="' + (TOP - 8) + '" r="4" fill="var(--a)"/>' +
          '<text x="' + (x0 + 16) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
          'fill="var(--ink-2)" font-family="var(--sans)">Mujer</text>' +
-         '<circle cx="' + (x0 + 62) + '" cy="' + (TOP - 8) + '" r="5" fill="var(--b)"/>' +
+         '<circle cx="' + (x0 + 62) + '" cy="' + (TOP - 8) + '" r="4" fill="var(--b)"/>' +
          '<text x="' + (x0 + 72) + '" y="' + (TOP - 4) + '" font-size="10.5" ' +
          'fill="var(--ink-2)" font-family="var(--sans)">Hombre</text>';
 
